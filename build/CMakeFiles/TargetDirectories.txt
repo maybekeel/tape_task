@@ -1,0 +1,3 @@
+/home/ivlicheva/TapeTask/build/CMakeFiles/type_task.dir
+/home/ivlicheva/TapeTask/build/CMakeFiles/edit_cache.dir
+/home/ivlicheva/TapeTask/build/CMakeFiles/rebuild_cache.dir
