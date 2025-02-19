@@ -4,19 +4,23 @@
 #include <cstdint>
 
 namespace tape {
+using type = int32_t;
+
 class ITape {
-public:
+   public:
     virtual ~ITape() = default;
 
-    virtual int32_t read() = 0;
-    virtual void write(int32_t) = 0;
+    virtual type read() = 0;
+    virtual void write(type) = 0;
     virtual void move_forward() = 0;
     virtual void move_backward() = 0;
+    virtual void rewind() = 0;
     virtual bool is_end() = 0;
+    virtual bool is_begin() = 0;
 
-protected:
+   protected:
     ITape() = default;
 };
-}
+}  // namespace tape
 
 #endif

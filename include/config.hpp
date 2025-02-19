@@ -4,9 +4,10 @@
 #include <chrono>
 
 class Config {
-private:
+   private:
     using ms = std::chrono::milliseconds;
-public:
+
+   public:
     explicit Config(const std::string& cfg_path);
     struct Delay {
         ms read_delay;
@@ -16,7 +17,7 @@ public:
 
     const Delay& get_delay() const noexcept;
 
-private:
+   private:
     Delay _delay;
 };
 

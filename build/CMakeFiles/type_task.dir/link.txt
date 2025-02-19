@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/type_task.dir/main.cpp.o CMakeFiles/type_task.dir/src/config.cpp.o CMakeFiles/type_task.dir/src/file_tape.cpp.o CMakeFiles/type_task.dir/src/tape_sort.cpp.o -o type_task  /usr/lib/x86_64-linux-gnu/libyaml-cpp.so.0.7.0 

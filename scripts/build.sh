@@ -4,5 +4,7 @@ if [ ! -d "build" ]; then
 fi
 
 cd build
-cmake ..
-make
+cmake .. \
+    -D CMAKE_CXX_COMPILER=g++ \
+    -D BUILD_TESTING=on
+make -j$(( $(nproc) - 1 ))
