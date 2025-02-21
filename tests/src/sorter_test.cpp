@@ -1,4 +1,5 @@
 #include "sorter_test.hpp"
+
 #include "file_tape.hpp"
 
 void SorterTest::SetUp() {
@@ -41,7 +42,8 @@ TEST_F(SorterTest, Sort_EmptyInput) {
 }
 
 TEST_F(SorterTest, Sort_LargeData) {
-    auto input = std::make_shared<tape::FileTape>(config->get_delay(), "tests/large.txt");
+    auto input = std::make_shared<tape::FileTape>(
+        config->get_delay(), "tests/large.txt");
     auto output = creator->create();
     sorter->sort(input, output, 1000, 2048);
     output->rewind();
