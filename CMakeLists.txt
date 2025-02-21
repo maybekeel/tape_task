@@ -4,18 +4,17 @@ project(tape_task LANGUAGES CXX)
 
 add_executable(${PROJECT_NAME})
 
+include(${CMAKE_CURRENT_LIST_DIR}/tape_task.cmake)
+
 target_sources(${PROJECT_NAME}
     PRIVATE
+    ${TAPE_TASK_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/main.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/config.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/file_tape.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/tape_sort.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/file_tape_create.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
     PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/include
+    ${TAPE_TASK_INCLUDES}
 )
 
 target_compile_features(${PROJECT_NAME}
@@ -32,19 +31,18 @@ if(BUILD_TESTING)
 
     add_executable(test_${PROJECT_NAME})
 
+    include(${CMAKE_CURRENT_LIST_DIR}/tests/tests.cmake)
+
     target_sources(test_${PROJECT_NAME}
         PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/tests/config_test.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/src/config.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/src/file_tape.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/src/tape_sort.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/src/file_tape_create.cpp
+        ${TAPE_TASK_SOURCES}
+        ${TAPE_TASK_TESTS_SOURCES}
     )
 
     target_include_directories(test_${PROJECT_NAME}
         PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}/include/
-        ${CMAKE_CURRENT_LIST_DIR}/tests/
+        ${CMAKE_CURRENT_LIST_DIR}/tests/include
     )
     target_compile_features(test_${PROJECT_NAME} PRIVATE cxx_std_20)
 
