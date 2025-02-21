@@ -4,46 +4,39 @@
 #include <memory>
 
 #include "config.hpp"
+#include "creator.hpp"
 #include "file_tape.hpp"
-#include "file_tape_create.hpp"
-#include "include/file_tape.hpp"
-#include "include/file_tape_create.hpp"
-#include "include/tape_sort.hpp"
+#include "file_tape_creator.hpp"
+#include "sorter.hpp"
 #include "tape.hpp"
-#include "tape_create.hpp"
-#include "tape_sort.hpp"
 
 int main(int argc, char** argv) {
     auto start = std::chrono::high_resolution_clock::now();
-    std::string in_name, out_name;
-    size_t n = 0, m = 0;
-    if (argc > 4) {
-        in_name = argv[1];
-        out_name = argv[2];
-        n = std::stoul(argv[3]);
-        m = std::stoul(argv[4]);
-    } else {
+    if (argc < 5) {
         std::cerr << "Bad args\n";
         return 1;
     }
-    Config cfg("cfg/tape_task.yml");
+    std::string in_name{argv[1]};
+    std::string out_name{argv[2]};
+    std::string cfg_path{argv[3]};
+    size_t n = std::stoul(argv[4]);
+    size_t m = std::stoul(argv[5]);
+    auto cfg = std::make_shared<Config>(cfg_path);
 
     auto in = std::make_shared<tape::FileTape>(
-        cfg.get_delay(), in_name);
+        cfg->get_delay(), in_name);
     auto out = std::make_shared<tape::FileTape>(
-        cfg.get_delay(), out_name);
+        cfg->get_delay(), out_name);
 
-    auto creator = std::make_shared<FileTapeCreator>(
-        cfg.get_delay(), "/home/ivlicheva/tape_task/");
-    // auto tmp = creator->create();
-    TapeSorter sorter(creator);
-    // sorter._mergesort(first, second);
-    sorter.sort(in, out, m);
+    auto creator =
+        std::make_shared<tape::FileTapeCreator>(cfg);
+    tape::Sorter sorter(creator);
+    sorter.sort(in, out, n, m);
 
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<
         std::chrono::milliseconds>(end - start);
-    std::cout << "Время выполнения: " << duration.count()
-              << " мс" << std::endl;
+    std::cout << "Execution time: " << duration.count()
+              << " ms" << std::endl;
     return 0;
 }
