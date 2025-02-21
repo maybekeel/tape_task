@@ -2,3 +2,5 @@ delay:
   read_delay: 100
   write_delay: 200
   seek_delay: 50
+tmp_tapes:
+  path: "/home/ivlicheva/tape_task/tmp/"
