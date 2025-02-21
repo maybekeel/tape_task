@@ -20,13 +20,13 @@ class FileTape : public ITape {
     auto operator=(const FileTape&) -> FileTape& = delete;
     auto operator=(FileTape&&) -> FileTape& = delete;
 
-    type read() override final;
+    auto read() -> type override final;
     void write(type value) override final;
     void move_forward() override final;
     void move_backward() override final;
     void rewind() override final;
-    bool is_end() override final;
-    bool is_begin() override final;
+    auto is_end() -> bool override final;
+    auto is_begin() -> bool override final;
 
    private:
     Config::Delay _cfg;
@@ -34,6 +34,7 @@ class FileTape : public ITape {
     std::streampos _begin = -1;
 
     void _back();
+    void _move(std::streampos pos);
 };
 }  // namespace tape
 

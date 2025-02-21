@@ -9,12 +9,7 @@ tape::FileTape::FileTape(const Config::Delay& cfg,
     : _cfg(cfg),
       _tape(file_name, std::ios::in | std::ios::out) {
     if (!_tape) {
-        std::ofstream create_file(file_name);
-        if (!create_file) {
-            throw std::runtime_error(
-                "Unable to create file " + file_name);
-        }
-        create_file.close();
+        std::ofstream(file_name).close();
         _tape.open(file_name, std::ios::in | std::ios::out);
     }
     if (!_tape) {
@@ -32,8 +27,12 @@ auto tape::FileTape::read() -> type {
     auto pos = _tape.tellg();
     type value;
     _tape >> value;
-    _tape.seekg(pos);
-    _tape.seekp(pos);
+    if (_tape.fail()) {
+        _tape.clear();
+        throw std::runtime_error(
+            "Unable to read: invalid file");
+    }
+    _move(pos);
     return value;
 }
 
@@ -46,8 +45,7 @@ void tape::FileTape::write(const type value) {
     }
     _tape << value;
     _tape.flush();
-    _tape.seekg(pos);
-    _tape.seekp(pos);
+    _move(pos);
 }
 
 void tape::FileTape::move_forward() {
@@ -84,7 +82,7 @@ void tape::FileTape::rewind() {
     _tape.seekp(_begin, std::ios::beg);
 }
 
-bool tape::FileTape::is_end() {
+auto tape::FileTape::is_end() -> bool {
     if (_tape.eof()) {
         return true;
     }
@@ -93,17 +91,14 @@ bool tape::FileTape::is_end() {
     _tape >> value;
     if (_tape.fail()) {
         _tape.clear();
-        _tape.seekg(pos);
-        _tape.seekp(pos);
+        _move(pos);
         return true;
     }
-
-    _tape.seekg(pos);
-    _tape.seekg(pos);
+    _move(pos);
     return false;
 }
 
-bool tape::FileTape::is_begin() {
+auto tape::FileTape::is_begin() -> bool {
     return _tape.tellg() == _begin;
 }
 
@@ -113,4 +108,9 @@ void tape::FileTape::_back() {
     if (_tape.fail()) {
         _tape.clear();
     }
+}
+
+void tape::FileTape::_move(std::streampos pos) {
+    _tape.seekg(pos);
+    _tape.seekg(pos);
 }

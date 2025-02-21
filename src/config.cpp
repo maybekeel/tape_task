@@ -18,9 +18,16 @@ Config::Config(const std::string& cfg_path) {
         static_cast<ms>(
             cfg["delay"]["seek_delay"].as<int>()),
     };
+    _tmp_tapes = {
+        cfg["tmp_tapes"]["path"].as<std::string>()};
 }
 
 auto Config::Config::get_delay() const noexcept
     -> const Delay& {
     return _delay;
+}
+
+auto Config::Config::get_tmp_tapes() const noexcept
+    -> const TmpTapes& {
+    return _tmp_tapes;
 }

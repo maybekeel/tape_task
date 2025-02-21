@@ -10,13 +10,13 @@ class ITape {
    public:
     virtual ~ITape() = default;
 
-    virtual type read() = 0;
+    virtual auto read() -> type = 0;
     virtual void write(type) = 0;
     virtual void move_forward() = 0;
     virtual void move_backward() = 0;
     virtual void rewind() = 0;
-    virtual bool is_end() = 0;
-    virtual bool is_begin() = 0;
+    virtual auto is_end() -> bool = 0;
+    virtual auto is_begin() -> bool = 0;
 
    protected:
     ITape() = default;
