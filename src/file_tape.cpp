@@ -67,7 +67,7 @@ void tape::FileTape::move_backward() {
     if (_tape.peek() == '\n') {
         _back();
     }
-    while (!is_begin() &&_tape.peek() != '\n') {
+    while (!is_begin() && _tape.peek() != '\n') {
         _back();
     }
 }

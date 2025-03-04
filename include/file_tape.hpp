@@ -34,7 +34,6 @@ class FileTape : public ITape {
     std::streampos _begin = -1;
 
     void _back();
-    void _move(std::streampos pos);
 };
 }  // namespace tape
 
