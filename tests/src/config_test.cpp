@@ -1,8 +1,9 @@
-#include "config_test.hpp"
-
-#include <fstream>
-
 #include "config.hpp"
+
+#include <gtest/gtest.h>
+
+#include <filesystem>
+#include <fstream>
 
 namespace {
 const std::string cfg_name = "cfg/tape_task.yml";
@@ -36,8 +37,10 @@ TEST(ConfigTest, Constructor_InvalidTmpTapesPath) {
                    "write_delay: 200\n  seek_delay: 50\n";
     config_file.close();
 
-    EXPECT_THROW({ Config config(bad_cfg_name); },
-                 std::runtime_error);
+    EXPECT_THROW(
+        { Config config(bad_cfg_name); },
+        std::runtime_error);
+    std::filesystem::remove(bad_cfg_name);
 }
 
 TEST(ConfigTest, GetTmpTapes_ValidConfig) {

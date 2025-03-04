@@ -1,5 +1,5 @@
 list(APPEND TAPE_TASK_TESTS_INCLUDES
-    ${CMAKE_CURRENT_LIST_DIR}/tests/include
+    ${CMAKE_CURRENT_LIST_DIR}/include
 )
 list(APPEND TAPE_TASK_TESTS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/src/config_test.cpp

@@ -1,10 +1,8 @@
 #!/bin/bash
-if [ ! -d "build" ]; then
-  mkdir build
-fi
 
-cd build
-cmake .. \
+cmake -S . -B build \
     -D CMAKE_CXX_COMPILER=g++ \
-    -D BUILD_TESTING=on
-make -j$(( $(nproc) - 1 ))
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=on \
+    -D BUILD_TESTING=off
+
+cmake --build build -- -j$(( $(nproc) - 1 ))

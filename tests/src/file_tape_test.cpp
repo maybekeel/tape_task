@@ -1,6 +1,10 @@
-#include "file_tape_test.hpp"
+#include "file_tape.hpp"
+
+#include <gtest/gtest.h>
 
 #include <fstream>
+
+#include "config.hpp"
 
 namespace {
 const std::string test_file = "tests/test.txt";

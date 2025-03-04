@@ -47,8 +47,9 @@ TEST_F(SorterTest, Sort_LargeData) {
     auto output = creator->create();
     sorter->sort(input, output, 1000, 2048);
     output->rewind();
-    for (tape::type i = 1; i <= 1000; ++i) {
-        EXPECT_EQ(output->read(), i);
-        output->move_forward();
+    auto i = 1000;
+    while (!output->is_begin()) {
+        output->move_backward();
+        EXPECT_EQ(output->read(), i--);
     }
 }
